@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+# Use this code to show data on an API
 # from python std library
 import csv
 
@@ -7,6 +8,8 @@ import csv
 import numpy as np
 # python3 -m pip install matplotlib
 import matplotlib
+
+#The Agg allows us to save to png in high quality format
 matplotlib.use('Agg')
 # sudo apt install python3-tk
 import matplotlib.pyplot as plt
@@ -20,19 +23,23 @@ def parsecsvdata():
      "r") as downtime:
         # parse csv data with csv.reader
         downdata = csv.reader(downtime, delimiter=",")
+        #print(type(downdata))
         for row in downdata:
+            # rowdat is a tuple not a list, lists are mutable, rearrangle - tuples cannot (immutable) 
             rowdat = (row[0], row[1], row[2], row[3])
+            #print(type(rowdat))
             summary.append(rowdat) # add dict to list
     return summary
 
 def main():
+    #number of bars in our graph, we know we have 4 data points in csv file
     N = 4
     ## grab our data
     summary = parsecsvdata() # grab our data
     localnetMeans = summary[0] # LAN data
     wanMeans = summary[1] # WAN data
 
-    ind = np.arange(N)    # the x locations for the groups
+    ind = np.arange(N)    # the x locations for the groups, creates a set of numbers based on N
     # the width of the bars: can also be len(x) sequence
     width = 0.35
 
